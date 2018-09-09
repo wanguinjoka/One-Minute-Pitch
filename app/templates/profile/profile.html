@@ -1,29 +1,14 @@
 {% extends 'base.html'%}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-<div class="container">
-<div class="row">
-<!-- displaying  Username-->
-  <div class="col-md-4">
-    <h3> {{user.username| capitalize}} </h3>
 
-    <!--Displaying user bio-->
-    {% if user.bio %}
-      <p> {{user.bio}}</p>
-    {%else%}
-      <p> {{user.username| capitalize}} has no bio </p>
-    {% endif %}
-  </div>
-
-  <!--Display profile photo-->
-  <div class="col-md-4">
-
-    {% if user.profile_pic_path %}
-    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
-    {%else%}
-    <p>No profile picture</p>
-    {% endif %}
-  </div>
-</div>
-</div>
+<div class="content-section">
+        <div class="media">
+          <img class="rounded-circle account-img" src="{{profile_pic_path}}">
+          <div class="media-body">
+            <h2 class="account-heading">{{user.username| capitalize}}</h2>
+            <p class="text-secondary">{{user.email}}</p>
+            <p class="text-secondary"> {{user.bio}}</p>
+          </div>
+        </div>
 {% endblock %}
