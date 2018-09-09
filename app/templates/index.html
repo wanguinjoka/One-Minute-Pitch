@@ -1,9 +1,20 @@
 {%extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <h2>One Minute Pitch</h2>
 {% for pitch in pitchs%}
+<div class = "container">
+        <img class="rounded-circle account-img" src="{{pitch.author.profile_pic_path}}">
      <h2>{{pitch.category}}</h2>
-     <p>By:{{pitch.author}} on {{pitch.date_posted}}</p>
+     <small>By:{{pitch.author.username}} on {{pitch.date_posted.strftime('%Y-%m-%d')}}</small>
      <p>{{ pitch.content }}</p>
+<button><a href="{{url_for('main.new_comment')}}">Comment</a></button>
+</div>
+      <div>
+        {%for comment in comments%}
+        <p>{{ comment.text }}</p>
+        <small>By:{{comment.author.username}}</small>
+         {%endfor%}
+    </div>
 {% endfor%}
 {% endblock%}

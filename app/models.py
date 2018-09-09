@@ -15,8 +15,9 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True, nullable = False)
     password = db.Column(db.String(60))
     bio = db.Column(db.String(255))
-    profile_pic_path = db.Column(db.String(), nullable = False, default='default.png')
+    profile_pic_path = db.Column(db.String(), nullable = False, default='pic.png')
     pitchs = db.relationship('Pitch', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy=True)
         
     # @property
     # def password(self):
@@ -38,6 +39,17 @@ class Pitch(db.Model):
     content = db.Column(db.String(200),nullable = False)
     category = db.Column(db.String(20),nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable =False)
+    comments = db.relationship('Comment', backref='pitch', lazy=True)
 
     def __repr__(self):
         return f"Pitch ('{self.content}', '{self.date_posted}','{self.category}')"
+
+class Comment(db.Model):
+	__tablename__='comment'
+	id=db.Column(db.Integer,primary_key=True)
+	userid=db.Column(db.Integer, db.ForeignKey('user.id'))
+	pitchid=db.Column(db.Integer, db.ForeignKey('pitch.id'))
+	text=db.Column(db.String(200),nullable = False)
+
+    # def __repr__(self):
+    #     return f"Comment('{self.text}','{self.userid}')"

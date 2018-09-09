@@ -1,9 +1,9 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
 from .. import db
-from ..models import User, Pitch
+from ..models import User, Pitch, Comment
 from flask_login import login_required,current_user
-from .forms import PitchForm
+from .forms import PitchForm, CommentForm
 
 # Views
 @main.route('/')
@@ -13,7 +13,8 @@ def index():
     View root page function that returns the index page and its data
     '''
     pitchs =Pitch.query.all()
-    return render_template('index.html', pitchs = pitchs)
+    comments = Comment.query.all()
+    return render_template('index.html', pitchs = pitchs, comments = comments)
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -38,4 +39,19 @@ def new_pitch():
 
     
     return render_template("create_pitch.html", pitch_form = pitch_form)
+
+@main.route('/comment/new', methods =['GET','POST'])
+@login_required
+def new_comment():
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = Comment(text=comment_form.text.data, author=current_user)
+        db.session.add(comment)
+        db.session.commit()
+
+        return redirect(url_for('main.index'))
+
+    return render_template("comment.html", comment_form = comment_form)
+
+    
 
