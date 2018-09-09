@@ -36,6 +36,7 @@ view the different categories.
 
 ## Technologies Used
 * Python3
+* Flask
 
 ## License
 MIT &copy;2017
