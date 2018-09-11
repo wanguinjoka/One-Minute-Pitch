@@ -32,17 +32,29 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f"User ('{self.username}', '{self.email}','{self.profile_pic_path}')"
 
+
+# class Category(db.Model):
+#     __tablename__ = 'category'
+#     id = db.Column(db.Integer, primary_key= True)
+#     name = db.Column(db.String(20))
+#     pitch_id = db.Column(db.Integer, db.ForeignKey('pitch.id'), nullable =False)
+    
+    # def __repr__(self):
+    #     return f'Category ('{self.name}')'
+
+
 class Pitch(db.Model):
     __tablename__ = 'pitch'
     id = db.Column(db.Integer,primary_key = True)
     date_posted = db.Column(db.DateTime,default=datetime.utcnow)
     content = db.Column(db.String(200),nullable = False)
-    category = db.Column(db.String(20),nullable= False)
+    category_id = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable =False)
     comments = db.relationship('Comment', backref='pitch', lazy=True)
 
     def __repr__(self):
-        return f"Pitch ('{self.content}', '{self.date_posted}','{self.category}')"
+        return f"Pitch ('{self.content}', '{self.date_posted}','{self.category_id}')"
+
 
 class Comment(db.Model):
 	__tablename__='comment'

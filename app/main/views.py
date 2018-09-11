@@ -31,7 +31,7 @@ def profile(uname):
 def new_pitch():
     pitch_form = PitchForm()
     if pitch_form.validate_on_submit():
-        pitch = Pitch(category=pitch_form.category.data, content=pitch_form.content.data, author=current_user)
+        pitch = Pitch(category_id=pitch_form.category_id.data, content=pitch_form.content.data, author=current_user)
         db.session.add(pitch)
         db.session.commit()
         flash('Your pitch has been created!', 'success')
@@ -40,15 +40,16 @@ def new_pitch():
     
     return render_template("create_pitch.html", pitch_form = pitch_form)
 
-@main.route('/comment/new', methods =['GET','POST'])
+@main.route('/comment', methods =['GET','POST'])
 @login_required
 def new_comment():
+    pitch = Pitch.query.filter_by(id = pitchid).first()
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        comment = Comment(text=comment_form.text.data, author=current_user)
+        comment = Comment(pitchid = id,text=comment_form.text.data, author=current_user)
         db.session.add(comment)
         db.session.commit()
-
+        flash('Your comment has been updated', 'success')
         return redirect(url_for('main.index'))
 
     return render_template("comment.html", comment_form = comment_form)

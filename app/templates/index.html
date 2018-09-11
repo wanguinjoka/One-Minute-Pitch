@@ -5,10 +5,10 @@
 {% for pitch in pitchs%}
 <div class = "container">
         <img class="rounded-circle account-img" src="{{pitch.author.profile_pic_path}}">
-     <h2>{{pitch.category}}</h2>
+     <h2>{{pitch.category_id}}</h2>
      <small>By:{{pitch.author.username}} on {{pitch.date_posted.strftime('%Y-%m-%d')}}</small>
      <p>{{ pitch.content }}</p>
-<button><a href="{{url_for('main.new_comment')}}">Comment</a></button>
+<a href="{{url_for('main.new_comment')}}">Comment</a>
 </div>
       <div>
         {%for comment in comments%}
