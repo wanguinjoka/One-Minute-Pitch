@@ -43,16 +43,16 @@ def new_pitch():
 @main.route('/comment', methods =['GET','POST'])
 @login_required
 def new_comment():
-    pitch = Pitch.query.filter_by(id = pitchid).first()
+    pitch_id = Pitch.query.filter_by(id= 'pitch_id').filter()
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        comment = Comment(pitchid = id,text=comment_form.text.data, author=current_user)
+        comment = Comment(text=comment_form.text.data, author=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been updated', 'success')
         return redirect(url_for('main.index'))
 
-    return render_template("comment.html", comment_form = comment_form)
+    return render_template("comment.html", comment_form = comment_form, pitch_id = pitch_id)
 
     
 

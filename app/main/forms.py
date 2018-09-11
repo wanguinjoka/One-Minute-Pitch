@@ -6,7 +6,7 @@ from ..models import Comment, User, Pitch
 
 
 class PitchForm(FlaskForm):
-    category_id = SelectField('Select Category', choices = [('1','Inspire Someone'),('2','Get Hired'),('3','Get the Gal')])
+    category_id = SelectField('Select Category :', choices=[('Inspire Someone', 'Inspirational pitch'),('Get the Job','Job Pitch'),('Get the Girl','Funny Pitch')])
     content= TextAreaField('Content', validators=[Required()])
     submit = SubmitField('Pitch')
 

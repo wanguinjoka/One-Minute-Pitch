@@ -1,20 +1,38 @@
 {%extends 'base.html'%}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-<h2>One Minute Pitch</h2>
-{% for pitch in pitchs%}
-<div class = "container">
-        <img class="rounded-circle account-img" src="{{pitch.author.profile_pic_path}}">
-     <h2>{{pitch.category_id}}</h2>
-     <small>By:{{pitch.author.username}} on {{pitch.date_posted.strftime('%Y-%m-%d')}}</small>
-     <p>{{ pitch.content }}</p>
-<a href="{{url_for('main.new_comment')}}">Comment</a>
+<div style="background-color:powderblue;" class="container">
+<h1 style="color:blue";>One Minute Pitch</h2>
+<h3>In life, you only have 60 seconds to impress someone. 1 minute can make or break you</h3>
 </div>
-      <div>
-        {%for comment in comments%}
-        <p>{{ comment.text }}</p>
-        <small>By:{{comment.author.username}}</small>
-         {%endfor%}
-    </div>
-{% endfor%}
+  <div class="container">
+{% for pitch in pitchs%}
+<div style="color:black;padding:20px;"class = "container">
+        
+     <h2>{{pitch.category_id}}</h2>
+     <p>{{ pitch.content }}</p>
+     <small><img class="rounded-circle account-img" src="{{pitch.author.profile_pic_path}}">By:{{pitch.author.username}} on {{pitch.date_posted.strftime('%Y-%m-%d')}}</small>
+  </div>   
+ <!-- <a href="{{url_for('main.new_comment')}}">Comment</a> --> 
+      <div class="container">
+      <div class="fb-comments" data-href="https://oneminutepitchip.herokuapp.com/" data-width="200" data-numposts="5"></div>
+      </div>
+
+                  <!-- <div>
+                    {%for comment in comments%}
+                    <p>{{ comment.text }}</p>
+                    <small>By:{{comment.author.username}}</small>
+                    {%endfor%}
+                </div> -->
+            {% endfor%} 
+</div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock%}
